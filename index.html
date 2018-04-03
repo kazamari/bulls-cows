@@ -45,19 +45,26 @@
         </div>
         
         <div v-if="!doYouWin">
-          <div class="input-num">
-            {{inputNum}}
-            <div class="message" v-if="msg">{{ msg }}</div>
-          </div>
-          <div class="num_key">
-            <button class="mini" @click="addNum(n % 10)" v-for="n in 10">{{ n % 10 }}</button>
-            <button ref="sendNum" @click.prevent="submit" class="try">Попробовать</button>
-            <button class="backspace" @click.prevent="backspace"><<</button>
-          </div>
+          <klava @trynum="tryNum($event)"></klava>
         </div>
       </div>
     </div>
   </div>
+
+<template id="klava">
+  <div>
+    <div class="input-num">
+      {{inputNum}}
+      <div class="message" v-if="msg">{{ msg }}</div>
+    </div>
+    <div class="num_key">
+      <button class="mini" @click="addNum(n % 10)" v-for="n in 10">{{ n % 10 }}</button>
+      <button ref="sendNum" @click="submit" class="try">Попробовать</button>
+      <button class="backspace" @click="backspace"><<</button>
+    </div>
+  </div>
+</template>
+
 
   <script src="vue.js"></script>
   <script src="app.js"></script>

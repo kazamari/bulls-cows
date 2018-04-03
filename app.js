@@ -1,8 +1,47 @@
-// Vue.directive('focus', {
-//     inserted: function (el) {
-//         el.focus()
-//     }
-// })
+Vue.component('klava', {
+  template: "#klava",
+  data() {
+    return {
+      inputNum: '',
+      msg: ''
+    };
+  },
+  methods: {
+    addNum(num){
+      if (this.inputNum.length < 4){
+        this.inputNum += num.toString();
+      }else{
+        this.msg = 'Число не должно содержать более 4 цифр';
+        setTimeout(() => { this.msg = '' }, 2000);
+      }
+    },
+    backspace(){
+      this.inputNum = this.inputNum.substr(0, this.inputNum.length-1);
+    },
+    submit(){
+      // Сначала необходимо проверить введенное число
+      if(this.check(this.inputNum)){
+        this.$emit('trynum', {value: this.inputNum});
+        this.inputNum = '';
+      }else{
+        this.msg = 'Число должно состоять из 4-х неповторяющихся цифр';
+        setTimeout(() => { this.msg = '' }, 2000);
+      }
+    },
+    check(num){
+      // num - 4-хзначное число
+      if(!isNaN(num) && num.toString().length == 4){
+        // num - 4-хзначное число без повторяющихся цифр
+        if(Array.from(num).reduce(function(a,b){if(a.indexOf(b)<0)a.push(b);return a;},[]).length == 4){
+          return true;
+        }          
+      }
+      return false;
+    }
+
+  }
+});
+
 
 var app = new Vue({
   el: '#app',
@@ -10,9 +49,7 @@ var app = new Vue({
     return {
       step: 0,
       computer_num: [],
-      inputNum: '',
       user_num: [],
-      msg: '',
       beginSplash:false,
       doYouWin: false,
       win_msg: 'Вы угадали!'
@@ -29,27 +66,17 @@ var app = new Vue({
     elem.scrollTop = elem.clientHeight;
   },
   methods: {
-    addNum: function(num){
-      if (this.inputNum.length < 4){
-        this.inputNum += num.toString();
-      }else{
-        this.msg = 'Число не должно содержать более 4 цифр';
-        setTimeout(function () {
-            this.msg = '';
-        }.bind(this), 2000);
-      }
-    },
-    backspace: function(){
-      this.inputNum = this.inputNum.substr(0, this.inputNum.length-1);
+    tryNum(e){
+      this.compare(Array.from(e.value), this.computer_num);
     },
     compare: function(num, computer_num){
-      attempt = {
+      let attempt = {
         step: ++this.step,
         num: num,
         bulls: 0,
         cows: 0
       }
-      for(var i = 0; i < 4; i++){
+      for(let i = 0; i < 4; i++){
         if(num[i] === computer_num[i]){
           attempt.bulls++;
         }else if(computer_num.indexOf(num[i]) !== -1){
@@ -61,29 +88,6 @@ var app = new Vue({
         this.doYouWin = true;
       }
     },
-    check: function(num){
-      // num - 4-хзначное число
-      if(!isNaN(num) && num.toString().length == 4){
-        // num - 4-хзначное число без повторяющихся цифр
-        if(Array.from(num).reduce(function(a,b){if(a.indexOf(b)<0)a.push(b);return a;},[]).length == 4){
-          return true;
-        }          
-      }
-      return false;
-    },
-    submit: function() {
-      // Сначала необходимо проверить введенное число
-      if(this.check(this.inputNum)){
-        this.compare(Array.from(this.inputNum), this.computer_num);
-        this.inputNum = '';
-      }else{
-        this.msg = 'Число должно состоять из 4-х неповторяющихся цифр';
-        setTimeout(function () {
-            this.msg = '';
-        }.bind(this), 2000);
-      }
-      //this.$refs.inum.focus();
-    },
     trigger () {
       this.$refs.sendNum.click();
     },
@@ -91,7 +95,7 @@ var app = new Vue({
       Object.assign(this.$data, this.$options.data());
     },
     init_game: function(){
-      this.reset_data ();
+      this.reset_data();
       for(var i = 0; i < 4; i++){
         while(true){
           n = (Math.floor(Math.random() * (9 - 0 + 1)) + 0).toString();
@@ -104,5 +108,3 @@ var app = new Vue({
     }
   }
 });
-
-//app.init_game();
