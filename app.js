@@ -7,6 +7,16 @@ Vue.component('klava', {
     };
   },
   methods: {
+    handleKeyPress(e) {
+      //console.log(+e.key);
+      if (+e.key || e.key === '0'){
+        this.addNum(parseInt(e.key));
+      } else if (e.key === 'Enter') {
+        this.submit();
+      } else if (e.key === 'Backspace'){
+        this.backspace();
+      }
+    },
     addNum(num){
       if (this.inputNum.length < 4){
         this.inputNum += num.toString();
@@ -32,13 +42,16 @@ Vue.component('klava', {
       // num - 4-хзначное число
       if(!isNaN(num) && num.toString().length == 4){
         // num - 4-хзначное число без повторяющихся цифр
-        if(Array.from(num).reduce(function(a,b){if(a.indexOf(b)<0)a.push(b);return a;},[]).length == 4){
+        if(Array.from(num).reduce((a,b) => {if(a.indexOf(b)<0)a.push(b);return a;}, []).length == 4){
           return true;
         }          
       }
       return false;
     }
-
+  },
+  mounted: function () {
+    // add an event listener for keypress
+    window.addEventListener('keypress', this.handleKeyPress);
   }
 });
 

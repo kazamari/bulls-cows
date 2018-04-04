@@ -31,13 +31,6 @@
       </div>
 
       <div class="controls">
-        
-      <!--
-        <div v-if="!doYouWin">
-          <input ref="inum" type="text" v-model="inputNum" @keyup.enter="trigger" maxlength="4" id="userInput" placeholder="введите 4-значное число" autofocus /><br/>
-          <button ref="sendNum" @click.prevent="submit" class="try">Попробовать</button>
-        </div>
-      -->
         <div class="win-info" v-if="doYouWin">
           <p>{{ win_msg }}</p>
           <p>Загаданное число {{ computer_num.join('') }}</p>
@@ -51,20 +44,19 @@
     </div>
   </div>
 
-<template id="klava">
-  <div>
-    <div class="input-num">
-      {{inputNum}}
-      <div class="message" v-if="msg">{{ msg }}</div>
+  <template id="klava">
+    <div>
+      <div class="input-num">
+        {{inputNum}}
+        <div class="message" v-if="msg">{{ msg }}</div>
+      </div>
+      <div class="num_key">
+        <button class="mini" @click="addNum(n % 10)" v-for="n in 10">{{ n % 10 }}</button>
+        <button ref="sendNum" @click="submit" class="try">Попробовать</button>
+        <button class="backspace" @click="backspace"><<</button>
+      </div>
     </div>
-    <div class="num_key">
-      <button class="mini" @click="addNum(n % 10)" v-for="n in 10">{{ n % 10 }}</button>
-      <button ref="sendNum" @click="submit" class="try">Попробовать</button>
-      <button class="backspace" @click="backspace"><<</button>
-    </div>
-  </div>
-</template>
-
+  </template>
 
   <script src="vue.js"></script>
   <script src="app.js"></script>
