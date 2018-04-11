@@ -5,60 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>bulls-cows</title>
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/assets/bootstrap.min.css">
 </head>
-<body>
-  <div id="app">
-    <div class="splash" v-if="beginSplash">
-      <button class="roundbutton" @click="init_game">Начать</button>
-    </div>
-    <div class="header">
-      <a class="reload" href="#" @click.prevent="init_game" title="reload"></a>
-      <!--a href="#" @click.prevent="get_info"><img src="" alt="info"></a-->
-    </div>
-    <div class="game">
-      <div id="attempts">
-        <div class="inner">
-          <div class="item" v-for="num in user_num">
-            <div class="u_step">{{ num.step }}.</div>
-            <div class="u_num">{{ num.num.join('') }}</div>
-            <div class="bc">
-              <span v-for="n in num.bulls" class="bulls"></span><span v-for="n in num.cows" class="cows"></span><span v-for="n in (4 - num.bulls - num.cows)"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="controls">
-        <div class="win-info" v-if="doYouWin">
-          <p>{{ win_msg }}</p>
-          <p>Загаданное число {{ computer_num.join('') }}</p>
-          <button class="roundbutton" @click="init_game">Повторить</button>
-        </div>
-        
-        <div v-if="!doYouWin">
-          <klava @trynum="tryNum($event)"></klava>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <template id="klava">
-    <div>
-      <div class="input-num">
-        {{inputNum}}
-        <div class="message" v-if="msg">{{ msg }}</div>
-      </div>
-      <div class="num_key">
-        <button class="mini" @click="addNum(n % 10)" v-for="n in 10">{{ n % 10 }}</button>
-        <button ref="sendNum" @click="submit" class="try">Попробовать</button>
-        <button class="backspace" @click="backspace"><<</button>
-      </div>
-    </div>
-  </template>
-
-  <script src="vue.js"></script>
-  <script src="app.js"></script>
-</body>
+  <body>
+    <div id="app"></div>
+    <script src="/dist/build.js"></script>
+  </body>
 </html>

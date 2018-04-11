@@ -1,4 +1,18 @@
-# bulls-cows
-Bulls And Cows game on Vue.js
+# vue_wps_bulls_cows
 
-See how it works [here](https://kazamari.github.io/bulls-cows/).
+> A Vue.js project
+
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+```
+
+For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
