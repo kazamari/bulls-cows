@@ -118,7 +118,7 @@ export default {
 </script>
 
 <style>
-body{background: #eee url('assets/bg.jpg') -150px 0;}
+body{background: #eee url('/assets/img/bg.jpg') -150px 0;}
 button{
   border:1px solid #B2B475;
   background:#B2B475;
@@ -175,7 +175,7 @@ button.roundbutton{
   z-index:2;
 }
 .header a{display:inline-block;width:44px;height:44px;margin-top:4px;}
-.header a.reload{background: url('assets/icons8-reset-32.png') 50% 50% no-repeat;}
+.header a.reload{background: url('/assets/img/icons8-reset-32.png') 50% 50% no-repeat;}
 .game{
   position: relative;
   height:calc(100vh - 40px);
